@@ -5,7 +5,22 @@
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
-
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>password</th>
+        <th>email</th>
+        <th>access level</th>
+    </tr>
+    <tr>
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getPassword()}"></td>
+        <td th:utext="${user.getEmail()}"></td>
+        <td th:utext="${role.getRole()}"></td>
+    </tr>
+</table>
 
 </body>
 </html>
