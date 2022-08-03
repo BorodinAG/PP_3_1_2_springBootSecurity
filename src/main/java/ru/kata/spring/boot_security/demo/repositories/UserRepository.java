@@ -8,5 +8,6 @@ import javax.swing.*;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findUserByName(Spring name);
+//    User findUserByName(String name);
+    User findByUsername(String username);
 }

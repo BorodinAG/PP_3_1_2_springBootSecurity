@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>users info</title>
     <style>
         table {
             width: 35%; /* Ширина таблицы */
@@ -22,32 +22,39 @@
 </head>
 <body>
 <br>
-<h1>Your information</h1>
+<h1>All users</h1>
 <table border="1">
     <tr>
         <th>Id</th>
         <th>Username (Login)</th>
-        <th>Password</th>
         <th>Name</th>
         <th>Surname</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Actions</th>
     </tr>
     <tbody>
-    <tr>
+    <tr th:each="user : ${list}">
         <td th:utext="${user.id}"></td>
         <td th:utext="${user.username}"></td>
-        <td th:utext="${user.password}"></td>
         <td th:utext="${user.name}"></td>
         <td th:utext="${user.surname}"></td>
         <td th:utext="${user.email}"></td>
         <td th:utext="${user.roles}"></td>
-    </tr>
+        <td>
+            <button><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></button>
+            &nbsp &nbsp &nbsp
+            <form th:action="@{/delete/{id}(id=${user.id})}" th:method="delete">
+                <input type="submit" value="Delete"/>
+            </form>
+        <button><a th:href="@{/user/{id}(id=${user.id})}">User_page</a></button>
+        </td>
+   </tr>
     </tbody>
-    </table>
-    <br><br>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit">Sign Out</button>
-    </form>
+</table>
+<br>
+<button><a href="/new">Create user</a></button>
+<br>
 </body>
 </html>
+

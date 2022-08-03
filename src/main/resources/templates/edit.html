@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<form action="#" th:action="@{/edit}" th:object="${user}" method="patch">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+    <label for="username">Username(Login)</label>
+    <input type="text" th:field="*{username}" id="username" placeholder="username">
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="password">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="name">
+    <label for="surname">Surname</label>
+    <input type="text" th:field="*{surname}" id="surname" placeholder="surname">
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="email">
+    <br/>
+    <strong><label for="role">Role</label></strong>
+    <br/>
+    <select multiple class="custom-select w-100"
+            size="2" id="role" name="role">
+        <option
+                th:each="role : ${roles}"
+                th:text="${role.getRole()}"
+                th:value="${role.role}">
+        </option>
+    </select>
+    <br/>
+    <br/>
+    <input type="submit" value="Update User">
+    <br>
+</form>
+</body>
+</html>
