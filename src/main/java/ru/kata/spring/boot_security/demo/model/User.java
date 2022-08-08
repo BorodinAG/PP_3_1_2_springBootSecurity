@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -60,16 +58,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private List<Role> roles;
-
-    public User(Long id, String username, String password, String name, String surname, String email, List<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.roles = roles;
-    }
 
     public User(String username, String password, String name, String surname, String email, List<Role> roles) {
         this.username = username;
