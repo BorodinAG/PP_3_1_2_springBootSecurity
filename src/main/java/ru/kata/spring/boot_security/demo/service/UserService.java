@@ -50,11 +50,16 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-
+    @Transactional
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
+//    public void updateUser(User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        userRepository.save(user);
+//    }
 //    public void saveUser(User user) {
 //        User updatedUser = findByUsername(user.getUsername());
 //        if (updatedUser == null) {

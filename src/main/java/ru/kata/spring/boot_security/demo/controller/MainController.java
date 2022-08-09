@@ -84,20 +84,32 @@ public class MainController {
 
     //редактирование пользователя
     @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("roles", roleService.listRoles());
+    public String editUser(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("roles",roleService.listRoles());
         model.addAttribute("user", userService.getUser(id));
         return "edit";
     }
 
     @PatchMapping("/edit/{id}")
-    public String update(//@ModelAttribute("user") User user,//
-                         @PathVariable("id") long id, @RequestParam(value = "role") String role) {
-        User user = userService.getUser(id);
-        user.setRoles(roleService.findRolesByName(role));
+    public String updateUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/user";
     }
+//    @GetMapping("/edit/{id}")
+//    public String edit(Model model, @PathVariable("id") long id) {
+//        model.addAttribute("roles", roleService.listRoles());
+//        model.addAttribute("user", userService.getUser(id));
+//        return "edit";
+//    }
+//
+//    @PatchMapping("/edit/{id}")
+//    public String update(//@ModelAttribute("user") User user,//
+//                         @PathVariable("id") long id, @RequestParam(value = "role") String role) {
+//        User user = userService.getUser(id);
+//        user.setRoles(roleService.findRolesByName(role));
+//        userService.updateUser(user);
+//        return "redirect:/user";
+//    }
 
     //удаление пользователя
     @DeleteMapping("/delete/{id}")
