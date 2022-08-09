@@ -55,7 +55,19 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
-
+//    public void saveUser(User user) {
+//        User updatedUser = findByUsername(user.getUsername());
+//        if (updatedUser == null) {
+//            userRepository.save(user);
+//            return;
+//        }
+//        updatedUser.setName(user.getName());
+//        updatedUser.setSurname(user.getSurname());
+//        updatedUser.setEmail(user.getEmail());
+//        updatedUser.setUsername(user.getUsername());
+//        updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+//        userRepository.save(updatedUser);
+//    }
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

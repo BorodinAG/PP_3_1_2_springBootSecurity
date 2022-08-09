@@ -79,7 +79,7 @@ public class MainController {
     public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
         user.setRoles(roleService.findRolesByName(role));
         userService.addUser(user);
-        return "redirect:/";
+        return "redirect:/user";
     }
 
     //редактирование пользователя
@@ -96,7 +96,7 @@ public class MainController {
         User user = userService.getUser(id);
         user.setRoles(roleService.findRolesByName(role));
         userService.updateUser(user);
-        return "redirect:/";
+        return "redirect:/user";
     }
 
     //удаление пользователя
