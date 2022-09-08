@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Edit user</title>
 </head>
 <body>
-<form action="#" th:action="@{/edit}" th:object="${user}" method="patch">
+<form th:method="PATCH" th:action="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="id">ID</label>
     <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
     <label for="username">Username(Login)</label>
@@ -21,17 +21,15 @@
     <br/>
     <strong><label for="role">Role</label></strong>
     <br/>
-    <select multiple class="custom-select w-100"
-            size="2" id="role" name="role">
-        <option
-                th:each="role : ${roles}"
-                th:text="${role.getRole()}"
-                th:value="${role.role}">
-        </option>
+    <select multiple="multiple" th:field="*{roles}"
+            type="text" id="role">
+        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
+
     </select>
     <br/>
     <br/>
-    <input type="submit" value="Update User">
+    <button><a type="submit">Update User</a></button>
+    <!--    <input type="submit" value="Update User">-->
     <br>
 </form>
 </body>

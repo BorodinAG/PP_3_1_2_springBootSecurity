@@ -21,8 +21,8 @@
             size="2" id="role" name="role">
         <option
                 th:each="role : ${roles}"
-                th:text="${role.getRole()}"
-                th:value="${role.role}">
+                th:text="${role.getName()}"
+                th:value="${role.name}">
         </option>
     </select>
 

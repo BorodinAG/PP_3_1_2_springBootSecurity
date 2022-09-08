@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,14 @@ import java.security.Principal;
 public class MainController {
     private final UserService userService;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public MainController(UserService userService, RoleService roleService) {
+    public MainController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // загрузка главной страницы
@@ -30,10 +34,10 @@ public class MainController {
             roleService.addRole(new Role("ROLE_USER"));
         }
         if (userService.listUsers().isEmpty()) {
-            userService.addUser(new User("admin", userService.userPassword("admin"),
-                    "bob", "bobin", "bob@bob.com", roleService.findRolesByName("ROLE_ADMIN")));
-            userService.addUser(new User("user", userService.userPassword("user"),
-                    "Ivan", "Ivanov", "ivan@iavn.com", roleService.findRolesByName("ROLE_USER")));
+            userService.addUser(new User("admin", passwordEncoder.encode("admin"),
+                    "bob", "bobin", "bob@bob.com", roleService.findByName("ROLE_ADMIN")));
+            userService.addUser(new User("user", passwordEncoder.encode("user"),
+                    "Ivan", "Ivanov", "ivan@iavn.com", roleService.findByName("ROLE_USER")));
 
         }
         return "index";
@@ -77,7 +81,7 @@ public class MainController {
 
     @PostMapping()
     public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
-        user.setRoles(roleService.findRolesByName(role));
+        user.setRoles(roleService.findByName(role));
         userService.addUser(user);
         return "redirect:/user";
     }
@@ -85,31 +89,17 @@ public class MainController {
     //редактирование пользователя
     @GetMapping("/edit/{id}")
     public String editUser(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("roles",roleService.listRoles());
+        model.addAttribute("roles", roleService.listRoles());
         model.addAttribute("user", userService.getUser(id));
         return "edit";
     }
 
     @PatchMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
+    public String editUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
-        return "redirect:/user";
+        return "redirect:/users";
     }
-//    @GetMapping("/edit/{id}")
-//    public String edit(Model model, @PathVariable("id") long id) {
-//        model.addAttribute("roles", roleService.listRoles());
-//        model.addAttribute("user", userService.getUser(id));
-//        return "edit";
-//    }
-//
-//    @PatchMapping("/edit/{id}")
-//    public String update(//@ModelAttribute("user") User user,//
-//                         @PathVariable("id") long id, @RequestParam(value = "role") String role) {
-//        User user = userService.getUser(id);
-//        user.setRoles(roleService.findRolesByName(role));
-//        userService.updateUser(user);
-//        return "redirect:/user";
-//    }
+
 
     //удаление пользователя
     @DeleteMapping("/delete/{id}")
